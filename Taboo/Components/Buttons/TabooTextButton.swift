@@ -10,14 +10,12 @@ import SwiftUI
 struct TabooTextButton: View {
     @Environment(\.isEnabled) var isEnabled: Bool
     
-    @State private var isPressed: Bool = false
-    
     private var label: String
     private var systemName: String? = nil
     
     private var textButtonDefaults = TabooTextButtonDefault()
     private var background: Color {
-        textButtonDefaults.backgroundColor(isPressed: self.isPressed)
+        textButtonDefaults.backgroundColor()
     }
     
     private var foregroundColor: Color {
@@ -42,21 +40,7 @@ struct TabooTextButton: View {
         }
         .padding(.vertical, 6)
         .padding(.horizontal, 12)
-        .background(background)
-        .cornerRadius(10)
-        .scaleEffect(isPressed ? 0.9 : 1.0)
-        .animation(.spring(duration: 0.23), value: isPressed)
-        .simultaneousGesture(
-            DragGesture(minimumDistance: 0)
-                .onChanged{ _ in
-                    if !isPressed {
-                        isPressed = true
-                    }
-                }
-                .onEnded{ _ in
-                    isPressed = false
-                }
-        )
+        .modifier(PressScaleModifier())
     }
 }
 
@@ -70,12 +54,8 @@ extension TabooTextButton {
 }
 
 struct TabooTextButtonDefault {
-    func backgroundColor(isPressed: Bool) -> Color {
-        return if isPressed {
-            TabooColor.tabooGray100
-        } else {
-            .clear
-        }
+    func backgroundColor() -> Color {
+        return .clear
     }
     
     func foregroundColor(isEnabled: Bool) -> Color {
