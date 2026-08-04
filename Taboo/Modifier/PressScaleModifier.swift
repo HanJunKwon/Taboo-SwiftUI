@@ -22,7 +22,7 @@ struct PressScaleModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .background(backgroundColor)
-            .cornerRadius(10)
+            .cornerRadius(shape: TabooShape.medium)
             .scaleEffect(isPressed ? 0.9 : 1)
             .animation(.spring(duration: 0.23), value: isPressed)
             .simultaneousGesture(
