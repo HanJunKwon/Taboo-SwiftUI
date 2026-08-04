@@ -11,8 +11,6 @@ import SwiftUI
 public struct TabooButton: View {
     @Environment(\.isEnabled) var isEnabled: Bool
     
-    @State var isPressed: Bool = false
-    
     private var label: String
     private var action: () -> Void
     private var size: TabooButtonSize
@@ -40,20 +38,7 @@ public struct TabooButton: View {
         .frame(height: tabooButtonDefauls.height(buttonSize: size))
         .padding(.horizontal, tabooButtonDefauls.padding(buttonSize: size))
         .background(backgroundColor)
-        .clipShape(RoundedRectangle(cornerRadius: 10))
-        .scaleEffect(isPressed ? 0.9 : 1.0)
-        .animation(.spring(duration: 0.1), value: isPressed)
-        .simultaneousGesture(
-            DragGesture(minimumDistance: 0)
-                .onChanged{ _ in
-                    if !isPressed {
-                        isPressed = true
-                    }
-                }
-                .onEnded{ _ in
-                    isPressed = false
-                }
-        )
+        .modifier(PressScaleModifier())
     }
 }
 

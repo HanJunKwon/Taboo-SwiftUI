@@ -8,9 +8,6 @@
 import SwiftUI
 
 public struct TabooIconButton: View {
-    @State private var isPressed: Bool = false
-    
-    
     private var systemName: String
     private var size: TabooIconButtonSize
     private var style: TabooIconButtonStyle
@@ -22,7 +19,7 @@ public struct TabooIconButton: View {
     }
     
     private var boxColor: Color {
-        tabooIconButtonDefults.boxColor(style: self.style, isPressed: self.isPressed)
+        tabooIconButtonDefults.boxColor(style: self.style)
     }
     
     private var iconSize: CGFloat {
@@ -64,20 +61,7 @@ public struct TabooIconButton: View {
             RoundedRectangle(cornerRadius: 10)
                 .stroke(self.strokeColor, style: StrokeStyle(lineWidth: 2))
         }
-        .cornerRadius(10)
-        .scaleEffect(isPressed ? 0.9 : 1.0)
-        .animation(.spring(duration: 0.23), value: isPressed)
-        .simultaneousGesture(
-            DragGesture(minimumDistance: 0)
-                .onChanged{ _ in
-                    if !isPressed {
-                        isPressed = true
-                    }
-                }
-                .onEnded{ _ in
-                    isPressed = false
-                }
-        )
+        .modifier(PressScaleModifier())
     }
 }
 
@@ -90,23 +74,11 @@ struct TabooIconButtonDefaults {
         }
     }
     
-    func boxColor(style: TabooIconButtonStyle, isPressed: Bool) -> Color {
+    func boxColor(style: TabooIconButtonStyle) -> Color {
         switch (style) {
-            case .clear: if (isPressed) {
-                TabooColor.tabooGray100
-            } else {
-                .clear
-            }
-            case .fill: if (isPressed) {
-                TabooColor.tabooGray200
-            } else {
-                TabooColor.tabooGray100
-            }
-            case .outline: if (isPressed) {
-                TabooColor.tabooGray100
-            } else {
-                .clear
-            }
+            case .clear: .clear
+            case .fill: TabooColor.tabooGray100
+            case .outline: .clear
         }
     }
     
