@@ -10,7 +10,7 @@ import SwiftUI
 struct PressScaleModifier: ViewModifier {
     @State private var isPressed: Bool = false
     
-    private var pressedColor: Color = TabooColor.tabooGray100
+    var pressedColor: Color = TabooColor.tabooGray100
     private var backgroundColor: Color {
         if isPressed {
             self.pressedColor
@@ -18,6 +18,8 @@ struct PressScaleModifier: ViewModifier {
             .clear
         }
     }
+    
+    var action: () -> Void = {}
     
     func body(content: Content) -> some View {
         content
@@ -34,11 +36,23 @@ struct PressScaleModifier: ViewModifier {
                     }
                     .onEnded{ _ in
                         isPressed = false
+                        
+                        action()
                     }
             )
     }
     
-    func pressedColor(color: Color) -> PressScaleModifier {
-        .init(pressedColor: color)
+    func pressedColor(color: Color) -> Self {
+        var copy = self
+        copy.pressedColor = color
+        
+        return copy
+    }
+    
+    func action(action: @escaping @MainActor () -> Void) -> Self {
+        var copy = self
+        copy.action = action
+        
+        return copy
     }
 }
