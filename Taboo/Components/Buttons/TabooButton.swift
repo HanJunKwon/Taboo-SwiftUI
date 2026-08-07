@@ -9,69 +9,45 @@ import Foundation
 import SwiftUI
 
 public struct TabooButton: View {
-    @Environment(\.isEnabled) var isEnabled: Bool
-    
     private var label: String
     private var action: () -> Void
-    private var size: TabooButtonSize
-    
-    private var tabooButtonDefauls: TabooButtonDefaults = TabooButtonDefaults()
-    private var backgroundColor: Color {
-        TabooButtonDefaults().backgroundColor(isEnabled: isEnabled)
-    }
+    private var size: TabooButtonSize = .xlarge
+    private var style: TabooButtonStyle = .primary
     
     public init(
         label: String,
-        action: @escaping () -> Void,
-        size: TabooButtonSize = .xlarge
+        action: @escaping () -> Void
     ) {
         self.label = label
         self.action = action
-        self.size = size
     }
     
     public var body: some View {
-        VStack {
-            Text(label)
-                .foregroundStyle(.white)
-        }
-        .frame(height: tabooButtonDefauls.height(buttonSize: size))
-        .padding(.horizontal, tabooButtonDefauls.padding(buttonSize: size))
-        .background(backgroundColor)
-        .modifier(PressScaleModifier())
-    }
-}
-
-public struct TabooButtonDefaults {
-    func height(buttonSize: TabooButtonSize) -> CGFloat {
-        return switch buttonSize {
-            case .small: 35
-            case .medium: 40
-            case .large: 50
-            case .xlarge: 60
+        switch style {
+        case .primary:
+            Button(label, action: action)
+                .buttonStyle(TabooButtonPrimaryStyle(size: size))
+                .modifier(PressScaleModifier())
+        case .secondary:
+            Button(label, action: action)
+                .buttonStyle(TabooButtonSecondaryStyle(size: size))
+                .modifier(PressScaleModifier())
         }
     }
     
-    func padding(buttonSize: TabooButtonSize) -> CGFloat {
-        return switch buttonSize {
-            case .small: 12
-            case .medium: 15
-            case .large: 18
-            case .xlarge: 21
-        }
+    func size(size: TabooButtonSize) -> Self {
+        var view = self
+        view.size = size
+        
+        return view
     }
     
-    func backgroundColor(isEnabled: Bool) -> Color {
-        isEnabled ? TabooColor.tabooBlue600 : TabooColor.tabooBlue200
+    func style(style: TabooButtonStyle) -> Self {
+        var view = self
+        view.style = style
+        
+        return view
     }
-    
-    func textColor() -> Color {
-        return .white
-    }
-}
-
-public enum TabooButtonSize {
-    case small, medium, large, xlarge
 }
 
 #Preview {
@@ -80,33 +56,73 @@ public enum TabooButtonSize {
             label: "Button",
             action: {
                 print("Login")
-            },
-            size: .small
+            }
         )
+        .size(size: TabooButtonSize.small)
         
         TabooButton(
             label: "Button",
             action: {
                 print("Login")
-            },
-            size: .medium
+            }
         )
+        .size(size: TabooButtonSize.medium)
         
         TabooButton(
             label: "Button",
             action: {
                 print("Login")
-            },
-            size: .large
+            }
         )
+        .size(size: TabooButtonSize.large)
         
         TabooButton(
             label: "Button",
             action: {
                 print("Login")
-            },
-            size: .xlarge
+            }
         )
+        .size(size: TabooButtonSize.xlarge)
+    }
+}
+
+#Preview {
+    VStack {
+        TabooButton(
+            label: "Button",
+            action: {
+                print("Login")
+            }
+        )
+        .size(size: .small)
+        .style(style: .secondary)
+        
+        TabooButton(
+            label: "Button",
+            action: {
+                print("Login")
+            }
+        )
+        .size(size: .medium)
+        .style(style: .secondary)
+        
+        TabooButton(
+            label: "Button",
+            action: {
+                print("Login")
+            }
+        )
+        .size(size: .large)
+        .style(style: .secondary)
+        
+        TabooButton(
+            label: "Button",
+            action: {
+                print("Login")
+            }
+        )
+        .size(size: .xlarge)
+        .style(style: .secondary)
     }
 }
 
@@ -117,36 +133,36 @@ public enum TabooButtonSize {
             label: "Button",
             action: {
                 print("Login")
-            },
-            size: .small
+            }
         )
+        .size(size: .small)
         .disabled(true)
         
         TabooButton(
             label: "Button",
             action: {
                 print("Login")
-            },
-            size: .medium
+            }
         )
+        .size(size: .medium)
         .disabled(true)
         
         TabooButton(
             label: "Button",
             action: {
                 print("Login")
-            },
-            size: .large
+            }
         )
+        .size(size: .medium)
         .disabled(true)
         
         TabooButton(
             label: "Button",
             action: {
                 print("Login")
-            },
-            size: .xlarge
+            }
         )
+        .size(size: .large)
         .disabled(true)
     }
 }
