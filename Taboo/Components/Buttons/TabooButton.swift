@@ -8,15 +8,15 @@
 import Foundation
 import SwiftUI
 
-public struct TabooButton: View {
-    private var label: String
+public struct TabooButton<Label>: View where Label: View {
+    private var label: () -> Label
     private var action: () -> Void
     private var size: TabooButtonSize = .xlarge
     private var style: TabooButtonStyle = .primary
     
     public init(
-        label: String,
-        action: @escaping () -> Void
+        action: @escaping () -> Void,
+        @ViewBuilder label: @escaping () -> Label
     ) {
         self.label = label
         self.action = action
@@ -25,11 +25,19 @@ public struct TabooButton: View {
     public var body: some View {
         switch style {
         case .primary:
-            Button(label, action: action)
+            Button {
+                action()
+            } label: {
+                label()
+            }
                 .buttonStyle(TabooButtonPrimaryStyle(size: size))
                 .modifier(PressScaleModifier())
         case .secondary:
-            Button(label, action: action)
+            Button {
+                action()
+            } label: {
+                label()
+            }
                 .buttonStyle(TabooButtonSecondaryStyle(size: size))
                 .modifier(PressScaleModifier())
         }
@@ -52,75 +60,67 @@ public struct TabooButton: View {
 
 #Preview {
     VStack {
-        TabooButton(
-            label: "Button",
-            action: {
-                print("Login")
-            }
-        )
-        .size(size: TabooButtonSize.small)
+        TabooButton {
+            print("Login")
+        } label: {
+            Text("Button")
+        }
+        .size(size: .small)
         
-        TabooButton(
-            label: "Button",
-            action: {
-                print("Login")
-            }
-        )
-        .size(size: TabooButtonSize.medium)
+        TabooButton {
+            print("Login")
+        } label: {
+            Text("Button")
+        }
+        .size(size: .medium)
         
-        TabooButton(
-            label: "Button",
-            action: {
-                print("Login")
-            }
-        )
-        .size(size: TabooButtonSize.large)
+        TabooButton {
+            print("Login")
+        } label: {
+            Text("Button")
+        }
+        .size(size: .large)
         
-        TabooButton(
-            label: "Button",
-            action: {
-                print("Login")
-            }
-        )
-        .size(size: TabooButtonSize.xlarge)
+        TabooButton {
+            print("Login")
+        } label: {
+            Text("Button")
+        }
+        .size(size: .xlarge)
     }
 }
 
 #Preview {
     VStack {
-        TabooButton(
-            label: "Button",
-            action: {
-                print("Login")
-            }
-        )
+        TabooButton {
+            print("Login")
+        } label: {
+            Text("Button")
+        }
         .size(size: .small)
         .style(style: .secondary)
         
-        TabooButton(
-            label: "Button",
-            action: {
-                print("Login")
-            }
-        )
+        TabooButton {
+            print("Login")
+        } label: {
+            Text("Button")
+        }
         .size(size: .medium)
         .style(style: .secondary)
         
-        TabooButton(
-            label: "Button",
-            action: {
-                print("Login")
-            }
-        )
+        TabooButton {
+            print("Login")
+        } label: {
+            Text("Button")
+        }
         .size(size: .large)
         .style(style: .secondary)
         
-        TabooButton(
-            label: "Button",
-            action: {
-                print("Login")
-            }
-        )
+        TabooButton {
+            print("Login")
+        } label: {
+            Text("Button")
+        }
         .size(size: .xlarge)
         .style(style: .secondary)
     }
@@ -129,40 +129,36 @@ public struct TabooButton: View {
 
 #Preview {
     VStack {
-        TabooButton(
-            label: "Button",
-            action: {
-                print("Login")
-            }
-        )
+        TabooButton {
+            print("Login")
+        } label: {
+            Text("Button")
+        }
         .size(size: .small)
         .disabled(true)
         
-        TabooButton(
-            label: "Button",
-            action: {
-                print("Login")
-            }
-        )
+        TabooButton {
+            print("Login")
+        } label: {
+            Text("Button")
+        }
         .size(size: .medium)
         .disabled(true)
         
-        TabooButton(
-            label: "Button",
-            action: {
-                print("Login")
-            }
-        )
-        .size(size: .medium)
-        .disabled(true)
-        
-        TabooButton(
-            label: "Button",
-            action: {
-                print("Login")
-            }
-        )
+        TabooButton {
+            print("Login")
+        } label: {
+            Text("Button")
+        }
         .size(size: .large)
+        .disabled(true)
+        
+        TabooButton {
+            print("Login")
+        } label: {
+            Text("Button")
+        }
+        .size(size: .xlarge)
         .disabled(true)
     }
 }
