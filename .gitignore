@@ -70,3 +70,7 @@ fastlane/test_output
 build/
 DerivedData/
 *.xcuserstate
+
+## User settings
+xcuserdata/
+*.xcuserstate
