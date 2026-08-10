@@ -15,21 +15,31 @@ struct TabooAlert: View {
     let buttonAction: (() -> Void)?
     
     var body: some View {
-        VStack {
+        VStack(
+            alignment: .leading,
+            spacing: 20
+        ) {
             Text(title)
+                .multilineTextAlignment(.leading)
+                .foregroundColor(.black)
+                .font(.system(size: 20, weight: .semibold))
             
             if let desc = self.description {
                 Text(desc)
+                    .multilineTextAlignment(.leading)
+                    .foregroundColor(TabooColor.tabooGray500)
+                    .font(.system(size: 16, weight: .semibold))
             }
             
-            TabooButton(
-                label: buttonLabel ?? "OK",
-                action: {
-                    isPresented = false
-                    buttonAction?()
-                }
-            )
+            TabooButton {
+                isPresented = false
+                buttonAction?()
+            } label: {
+                Text(buttonLabel ?? "Button")
+                    .frame(maxWidth: .infinity)
+            }
         }
+        .frame(maxWidth: 270)
         .padding(20)
         .background(.white)
         .cornerRadius(shape: .medium)
@@ -40,16 +50,18 @@ struct TabooAlert: View {
     @Previewable @State var isPresented = false
     
     VStack {
-        TabooButton(label: "다이얼로그 띄우기", action: {
+        TabooButton {
             isPresented = true
-        })
+        } label: {
+            Text("다이얼로그 띄우기")
+        }
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
     .background(.yellow)
     .tabooAlert(
         isPresented: $isPresented,
-        title: "TabooAlert",
-        desc: "다이얼로그 창",
+        title: "TabooAlert--",
+        desc: "다이얼로그 창-----------------------------------------------------------",
         buttonLabel: "확인",
         buttonAction: {}
     )
