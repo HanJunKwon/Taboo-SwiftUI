@@ -25,7 +25,7 @@ struct TabooSingleBottomCTA<Content: View>: View {
                         .frame(maxWidth: .infinity)
                 }
             }
-            .padding(.horizontal, 10)
+            .padding(.horizontal, 20)
         }
     }
 }
