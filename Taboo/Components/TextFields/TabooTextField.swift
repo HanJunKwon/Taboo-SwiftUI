@@ -32,6 +32,7 @@ struct TabooTextField: View {
             spacing: 5
         ) {
             Text(title)
+                .font(.system(size: 15))
                 .foregroundColor(textColor)
             
             VStack {
@@ -44,7 +45,7 @@ struct TabooTextField: View {
             
             if isError {
                 Text(errorMessage)
-                    .font(.system(size: 13, weight: .semibold))
+                    .font(.system(size: 13))
                     .foregroundColor(TabooColor.tabooRed600)
             }
         }
