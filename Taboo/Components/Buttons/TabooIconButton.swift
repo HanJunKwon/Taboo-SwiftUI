@@ -45,6 +45,7 @@ public struct TabooIconButton: View {
         VStack {
             Image(systemName: self.systemName)
                 .resizable()
+                .scaledToFit()
                 .frame(
                     width: iconSize,
                     height: iconSize
