@@ -7,11 +7,14 @@
 import SwiftUI
 
 struct TabooBoxTextFieldModifer: ViewModifier {
+    @FocusState private var focus: Bool
+    
     func body(content: Content) -> some View {
         content
             .textInputAutocapitalization(.never)
             .disableAutocorrection(true)
-            .background(TabooColor.tabooGray100)
+            .background(focus ? TabooColor.tabooBlue100 : TabooColor.tabooGray100)
             .cornerRadius(14)
+            .focused($focus)
     }
 }
