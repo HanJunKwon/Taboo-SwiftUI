@@ -9,7 +9,9 @@ import SwiftUI
 struct TabooBoxTextFieldModifer: ViewModifier {
     func body(content: Content) -> some View {
         content
+            .textInputAutocapitalization(.never)
+            .disableAutocorrection(true)
             .background(TabooColor.tabooGray100)
-            .cornerRadius(8)
+            .cornerRadius(14)
     }
 }

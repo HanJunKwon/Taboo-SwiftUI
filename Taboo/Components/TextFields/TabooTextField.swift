@@ -8,13 +8,27 @@ import SwiftUI
 
 struct TabooTextField: View {
     @Environment(\.isEnabled) var isEnabled: Bool
+    @FocusState var isFocused: Bool
     
-    var title: String
-    @Binding var text: String
-    @Binding var isError: Bool
+    private var title: String
+    @Binding private var text: String
+    @Binding private var isError: Bool
     
+    private var style: TabooTextFieldStyle = .box
     private var placeHolder: String = ""
     private var errorMessage: String = ""
+    
+    private var titleColor: Color {
+        if isEnabled {
+            if isFocused {
+                TabooColor.tabooBlue600
+            } else {
+                TabooColor.tabooBlack900
+            }
+        } else {
+            TabooColor.tabooGray600
+        }
+    }
     
     private var textColor: Color {
         isEnabled ? TabooColor.tabooBlack900 : TabooColor.tabooGray600
@@ -33,15 +47,9 @@ struct TabooTextField: View {
         ) {
             Text(title)
                 .font(.system(size: 15))
-                .foregroundColor(textColor)
+                .foregroundColor(titleColor)
             
-            VStack {
-                TextField(placeHolder, text: $text)
-                    .padding(.horizontal, 10)
-                    .foregroundColor(textColor)
-            }
-            .padding(.vertical, 16)
-            .modifier(TabooBoxTextFieldModifer())
+            styledField
             
             if isError {
                 Text(errorMessage)
@@ -50,6 +58,28 @@ struct TabooTextField: View {
             }
         }
         .padding(.horizontal, 10)
+    }
+    
+    @ViewBuilder
+    private var styledField: some View {
+        let field = TextField(placeHolder, text: $text)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 16)
+            .foregroundColor(textColor)
+            .focused($isFocused)
+        
+        
+        switch style {
+        case .box: field.modifier(TabooBoxTextFieldModifer())
+        case .line: field.modifier(TabooLineTextFieldModifier(focus: $isFocused))
+        }
+    }
+    
+    func style(_ style: TabooTextFieldStyle) -> Self {
+        var view = self
+        view.style = style
+        
+        return view
     }
     
     func placeHolder(_ placeHolder: String) -> Self {
@@ -68,19 +98,28 @@ struct TabooTextField: View {
 }
 
 #Preview {
-    @Previewable @State var text: String = ""
+    @Previewable @State var id: String = ""
+    @Previewable @State var password: String = ""
     @Previewable @State var isError: Bool = true
     
-    VStack {
-        TabooTextField(title: "비밀번호", text: $text, isError: $isError)
-            .placeHolder("비밀번호를 입력해주세요.")
+    @Previewable @State var address: String = ""
+    
+    VStack(spacing: 15) {
+        TabooTextField(title: "아이디", text: $id, isError: $isError)
+            .placeHolder("사원번호를 입력해주세요.")
             .errorMessage("에러!!!")
         
-        TabooTextField(title: "비밀번호", text: $text, isError: $isError)
+        TabooTextField(title: "비밀번호", text: $password, isError: $isError)
             .placeHolder("비밀번호를 입력해주세요.")
-            .disabled(true)
         
-        Text("입력한 값: \(text)")
+        Text("ID: \(id)")
+        Text("PW: \(password)")
+        
+        TabooTextField(title: "주소", text: $address, isError: $isError)
+            .placeHolder("주소를 입력해주세요.")
+            .style(.line)
+        
+        Text("Address: \(address)")
         
     }
 }
