@@ -6,8 +6,15 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		B8742D9E3029B5FE00CD39F4 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = B8742D9D3029B5FA00CD39F4 /* .gitignore */; };
+		B894603A302AD7BB00F4F1FB /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8946039302AD7BB00F4F1FB /* Media.xcassets */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		B81EB48A300A028A005FFF37 /* Taboo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Taboo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B8742D9D3029B5FA00CD39F4 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		B8946039302AD7BB00F4F1FB /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -32,6 +39,8 @@
 		B81EB480300A028A005FFF37 = {
 			isa = PBXGroup;
 			children = (
+				B8946039302AD7BB00F4F1FB /* Media.xcassets */,
+				B8742D9D3029B5FA00CD39F4 /* .gitignore */,
 				B81EB48C300A028A005FFF37 /* Taboo */,
 				B81EB48B300A028A005FFF37 /* Products */,
 			);
@@ -120,6 +129,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B894603A302AD7BB00F4F1FB /* Media.xcassets in Resources */,
+				B8742D9E3029B5FE00CD39F4 /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
